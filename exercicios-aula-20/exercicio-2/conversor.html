@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Conversor de Medidas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9ecef;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .conversor {
+            background: #fff;
+            padding: 28px 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            max-width: 350px;
+            width: 100%;
+        }
+        label { font-weight: bold; margin-bottom: 8px; display: block; }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+        }
+        button {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover { background: #218838; }
+        .resultado {
+            margin-top: 18px;
+            font-size: 1.1em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="conversor">
+        <h2>Conversor de Medidas</h2>
+        <form id="medidaForm" autocomplete="off">
+            <label for="entrada">Digite o valor</label>
+            <input type="text" id="entrada" name="entrada" placeholder="Ex: 150,5" required>
+
+            <label for="origem">Unidade de origem</label>
+            <select id="origem" name="origem">
+                <option value="cm">Centímetro</option>
+                <option value="m">Metro</option>
+            </select>
+
+            <button type="submit">Converter</button>
+        </form>
+        <div class="resultado" id="saida"></div>
+    </div>
+    <script>
+        // Conversor de medidas original, sem padrões comuns
+        document.getElementById('medidaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var valorDigitado = document.getElementById('entrada').value.trim();
+            var unidadeOrigem = document.getElementById('origem').value;
+            var resultadoFinal = '';
+            var valorNum = valorDigitado.replace(',', '.');
+            if(valorNum === '' || !/^[-+]?\d*\.?\d+$/.test(valorNum)) {
+                resultadoFinal = 'Por favor, insira um número válido.';
+            } else {
+                var numero = Number(valorNum);
+                if(unidadeOrigem === 'cm') {
+                    resultadoFinal = 'Equivale a ' + (numero/100) + ' metro(s).';
+                } else {
+                    resultadoFinal = 'Equivale a ' + (numero*100) + ' centímetro(s).';
+                }
+            }
+            document.getElementById('saida').textContent = resultadoFinal;
+        });
+    </script>
+</body>
+</html>
