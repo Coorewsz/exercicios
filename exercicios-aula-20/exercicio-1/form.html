@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário de Contato</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; }
+        textarea { resize: none; }
+        button { background: #007bff; color: #fff; border: none; padding: 10px 18px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Contato</h2>
+        <form id="contatoForm" autocomplete="off">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="mensagem">Mensagem</label>
+            <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+    <script>
+
+        document.querySelector('#contatoForm').onsubmit = function(ev) {
+            ev.preventDefault();
+            let nomeCampo = document.querySelector('#nome').value.replace(/\s+/g, ' ').trim();
+            let emailCampo = document.querySelector('#email').value.trim();
+            let msgCampo = document.querySelector('#mensagem').value.trim();
+
+            let nomeOk = nomeCampo.length > 1 && nomeCampo.split(' ').length <= 4 && !/\d/.test(nomeCampo);
+        
+            let emailOk = emailCampo.indexOf('@') > 0 && emailCampo.indexOf('.') > emailCampo.indexOf('@')+1 && emailCampo.length > 5;
+       
+            let msgOk = msgCampo.length > 4 && /[a-zA-Z]/.test(msgCampo);
+
+            if (nomeOk && emailOk && msgOk) {
+                window.alert('Tudo certo, obrigado pelo contato!');
+            } else {
+                window.alert('Algum campo está incorreto, revise por favor.');
+            }
+        };
+    </script>
+</body>
+</html>
